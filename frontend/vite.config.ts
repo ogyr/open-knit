@@ -28,6 +28,8 @@ export default defineConfig({
             '@app': path.resolve(__dirname, 'src'),
             '@identity': path.resolve(__dirname, 'modules/identity'),
             '@ai': path.resolve(__dirname, 'modules/ai'),
+            '@ocr': path.resolve(__dirname, 'modules/ocr'),
+            '@document': path.resolve(__dirname, 'modules/document'),
             '@payment': path.resolve(__dirname, 'modules/payment'),
             '@transaction': path.resolve(__dirname, 'modules/transaction'),
             '@common': path.resolve(__dirname, 'modules/_common'),

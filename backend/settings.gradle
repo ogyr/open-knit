@@ -3,6 +3,8 @@ include(
         "modules:identity",
         "modules:_common",
         "modules:ai",
+        "modules:document",
+        "modules:ocr",
         "modules:payment",
         "modules:transaction",
         "modules:wallet"

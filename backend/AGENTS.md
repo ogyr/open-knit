@@ -15,6 +15,8 @@
 ## Must Pass
 
 - `./gradlew test`
+- If you add or change integration tests in `src/integrationTest`, also run the relevant `integrationTest` task (for example `./gradlew :modules:document:integrationTest`).
+- If you add or change integration tests in `src/test/integration`, also run the relevant `integrationTest` task (for example `./gradlew :modules:document:integrationTest`).
 - No new failing migrations
 - No new dependencies unless explicitly requested
 
@@ -25,6 +27,7 @@
     - `./gradlew compileJava`
 - If you modify/add tests, also run only the specific tests you changed (e.g.):
     - `./gradlew test --tests "bitecode.modules.transaction.TransactionPaymentTest"`
+    - `./gradlew :modules:<module>:integrationTest --tests "bitecode.modules.<module>.<ClassName>"`
 
 ## Formatting (mandatory)
 
@@ -41,7 +44,14 @@
 
 ## Tests (example)
 
+- Separate unit and integration tests by source set:
+  - unit tests go in `src/test/unit`
+  - integration tests go in `src/test/integration`
+- Backend modules should use the shared Gradle `integrationTest` source set and task instead of mixing integration coverage into `src/test`.
 - Prefer module integration tests that extend module test base (e.g. `TransactionIntegrationTest`).
+- Keep unit-test resources under `src/test/unit/resources`.
+- Keep integration-test-only properties and resources under `src/test/integration/resources`.
+- Module-owned integration-test configuration should stay in the owning module. If another module needs it, publish that module's test resources as a test artifact and import a uniquely named file such as `application-identity-test.yaml` instead of duplicating properties across modules.
 - Example (event-driven transaction creation):
 
 ```java
@@ -190,6 +200,26 @@ public class TransactionPaymentTest extends TransactionIntegrationTest {
 - Prefer Java `record` for DTOs and commands when immutability is desired.
 - Use Lombok `@Builder` on records when you need fluent construction (events/commands).
 - For entities: use Lombok `@Getter`/`@Setter` and constructor injection in services.
+- Use MapStruct for mappers. Do not create manual Spring/component mapper classes for normal entity/DTO conversions when the mapping belongs in a mapper interface.
+- Prefer `@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)` and keep mapper-specific custom logic as MapStruct default methods when needed.
+
+### MapStruct Reference Example
+
+Use existing module patterns like [UserMapper](backend/modules/identity/src/main/java/bitecode/modules/auth/user/model/mapper/UserMapper.java) and [PaymentMapper](backend/modules/payment/src/main/java/bitecode/modules/payment/payment/model/mapper/PaymentMapper.java):
+
+```java
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = {UserDataMapper.class}
+)
+public interface UserMapper {
+
+    @Mapping(target = "emptyPassword", expression = "java(user.getPassword() == null)")
+    UserDetails toUserDetails(User user);
+
+    User toUser(SignUpRequest request);
+}
+```
 
 ## Entities & IDs
 
@@ -197,6 +227,7 @@ public class TransactionPaymentTest extends TransactionIntegrationTest {
 - Never expose internal numeric `id` in APIs; expose UUID only.
 - Single-item GET endpoints must use UUID in the route.
 - Entity basics: `@Entity`, `@Table(schema = "...")`, Lombok `@Getter/@Setter`, and quote reserved column names via `@Column(name = "\"type\"")` when needed.
+- Do not duplicate schema constraints in entity annotations when Flyway is the source of truth. Avoid `@Column(nullable = ...)`, length declarations, precision/scale, and similar schema-shaping annotations unless they are needed for a runtime mapping concern that is not already expressed by the schema.
 
 ## Concurrency / Locks
 
@@ -232,6 +263,7 @@ public class TransactionPaymentTest extends TransactionIntegrationTest {
 - Use DTOs for request/response; never expose entities directly.
 - Handle errors consistently (single global handler + stable error shape).
 - Validate inputs at the boundary; never trust raw request data.
+- Prefer inline string literals in mapping annotations like `@RequestMapping("/documents")`. Extract them to constants only when the same mapping value is intentionally reused elsewhere and that shared reference should stay coupled in code.
 
 ### Example (controller)
 

@@ -1,0 +1,14 @@
+package bitecode.modules.ocr.config;
+
+import bitecode.modules._common.config.flyway.FlywayMigrationModule;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class OcrFlywayMigrationConfig {
+
+    @Bean
+    public FlywayMigrationModule ocrFlywayMigration() {
+        return new FlywayMigrationModule("ocr", "classpath:db/migration/ocr");
+    }
+}

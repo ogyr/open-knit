@@ -37,7 +37,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
 
-    testImplementation project(path: ':modules:_common', configuration: 'testArtifacts')
+    integrationTestImplementation project(path: ':modules:_common', configuration: 'integrationTestArtifacts')
     testImplementation project(':modules:identity')
     testImplementation project(':modules:transaction')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

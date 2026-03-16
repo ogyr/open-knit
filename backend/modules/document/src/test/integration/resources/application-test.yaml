@@ -1,0 +1,12 @@
+spring:
+  config:
+    import:
+      - classpath:config/application-test.yaml
+      - classpath:application-identity-test.yaml
+
+bitecode:
+  document:
+    storage:
+      default-storage-type: LOCAL
+      local:
+        base-path: ./local-storage/documents

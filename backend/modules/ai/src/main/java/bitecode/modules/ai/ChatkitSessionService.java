@@ -1,6 +1,6 @@
 package bitecode.modules.ai;
 
-import bitecode.modules.ai.agent.provider.openai.SimpleOpenAiClient;
+import bitecode.modules._common.client.openai.SimpleOpenAiClient;
 import bitecode.modules.ai.model.enums.AiServicesProviderType;
 import bitecode.modules.ai.service.AiServicesProviderConfigService;
 import lombok.RequiredArgsConstructor;

@@ -3,6 +3,8 @@ services:
     extends:
       file: backend/docker-compose.yml
       service: app
+    depends_on:
+      - postgres
 
   postgres:
     extends:

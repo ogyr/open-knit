@@ -1,0 +1,4 @@
+bitecode:
+  ocr:
+    open-ai:
+      model: ${BITECODE_OCR_OPEN_AI_MODEL:gpt-5.4}

@@ -18,7 +18,7 @@ interface ColoredLabelProps extends React.ComponentPropsWithoutRef<'span'> {
 export const ColoredLabel: React.FC<ColoredLabelProps> = ({color = "gray", children, ...restProps}) => {
     return (
         <span
-            className={twMerge(`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${colors[color]}`, restProps.className)}
+            className={twMerge(`inline-flex w-fit self-start items-center px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${colors[color]}`, restProps.className)}
             {...restProps}
         >
             {children}

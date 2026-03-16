@@ -1,10 +1,10 @@
 package bitecode.modules.ai.agent.client;
 
+import bitecode.modules._common.client.openai.SimpleOpenAiClient;
 import bitecode.modules.ai.agent.data.AiAgentChatResponseData;
 import bitecode.modules.ai.agent.data.AiAgentRequestData;
 import bitecode.modules.ai.agent.data.EnrichedAiAgentRequestData;
 import bitecode.modules.ai.agent.data.StreamingResponse;
-import bitecode.modules.ai.agent.provider.openai.SimpleOpenAiClient;
 import bitecode.modules.ai.model.entity.AiAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

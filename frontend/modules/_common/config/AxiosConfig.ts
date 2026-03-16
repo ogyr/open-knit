@@ -26,16 +26,19 @@ const isFormDataValue = (value: unknown): value is FormData =>
 const isFileValue = (value: unknown): value is File =>
     typeof File !== "undefined" && value instanceof File
 
+const isBlobValue = (value: unknown): value is Blob =>
+    typeof Blob !== "undefined" && value instanceof Blob
+
 export const addConverters = (axios: AxiosInstance) => {
     axios.interceptors.request.use(config => {
-        if (config.data && typeof config.data === "object" && !isFormDataValue && !isFileValue) {
+        if (config.data && typeof config.data === "object" && !isFormDataValue(config.data) && !isFileValue(config.data) && !isBlobValue(config.data)) {
             config.data = snakecaseKeys(config.data as Record<string, unknown>, {deep: true})
         }
         return config
     })
 
     axios.interceptors.response.use((response) => {
-        if (response.data && typeof response.data === "object") {
+        if (response.data && typeof response.data === "object" && !isBlobValue(response.data)) {
             response.data = camelcaseKeys(response.data, {deep: true});
         }
         return response;

@@ -168,7 +168,7 @@ configuration, and admin/user/open endpoints for AI chat operations.
 - `ChatProviderBuilder.ClientConfig<T>`: chat client config record.
 - `ChatProviderBuilder.RecordingClientConfig<T>`: recording API config record.
 - `VectorStoreFactory`: builds vector-store instance per provider config.
-- `OpenAiFileApiClient`: OpenAI file upload client for assistant/file attachments.
+- `OpenAiFilesClient` (from `_common`): shared OpenAI file upload client for assistant/file attachments.
 - `SimpleOpenAiClient`: minimal custom WebClient-based OpenAI client for responses/chatkit.
 - `SimpleOpenAiClient.StreamChunk`: parsed streaming chunk record.
 

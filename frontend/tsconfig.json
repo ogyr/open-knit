@@ -15,6 +15,9 @@
       "@ai/*": [
         "modules/ai/*"
       ],
+      "@document/*": [
+        "modules/document/*"
+      ],
       "@payment/*": [
         "modules/payment/*"
       ],

@@ -41,20 +41,21 @@ export default function ApplicationShell({children, routes, isSidebarOpen, setSi
                     open={isSidebarOpen}
                     onClose={() => isMobile && setSidebarOpen(false)}
                     className={twMerge(
-                        "hide-scrollbar p-3",
-                        isMobile ? "w-[90vw] max-w-[300px] h-dvh overflow-y-auto" : "static w-full h-full"
+                        "hide-scrollbar",
+                        isMobile ? "w-[90vw] max-w-[300px] h-dvh overflow-y-auto p-3" : "static w-full h-full p-0"
                     )}
                     style={isMobile ? {height: "100dvh", maxHeight: "100dvh"} : {maxHeight}}
                 >
-                    <div className="flex items-center justify-between">
-                        <img
-                            className="px-2 py-1.5 h-8"
-                            alt="Bitecode logo"
-                            src="/Logo.svg"
-                        />
-                        <Close onClick={() => setSidebarOpen(false)} className="md:hidden text-gray-500 hover:bg-gray-200 rounded-md cursor-pointer size-6"/>
+                    <div className={twMerge(!isMobile && "px-4")}>
+                        <div className="flex h-16 items-center justify-between border-b border-gray-200 px-2 py-4">
+                            <img
+                                className="h-8"
+                                alt="Bitecode logo"
+                                src="/Logo.svg"
+                            />
+                            <Close onClick={() => setSidebarOpen(false)} className="md:hidden text-gray-500 hover:bg-gray-200 rounded-md cursor-pointer size-6"/>
+                        </div>
                     </div>
-                    <hr className="md:hidden border-gray-200 mt-2"/>
                     {children}
                 </Drawer>
             </div>

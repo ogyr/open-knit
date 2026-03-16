@@ -87,10 +87,55 @@ allprojects {
 	}
 }
 
+subprojects {
+    plugins.withId('java') {
+        sourceSets {
+            test {
+                java.setSrcDirs(['src/test/unit/java', 'src/test/java'])
+                resources.setSrcDirs(['src/test/unit/resources', 'src/test/resources'])
+            }
+            integrationTest {
+                java.setSrcDirs(['src/test/integration/java', 'src/integrationTest/java'])
+                resources.setSrcDirs(['src/test/integration/resources', 'src/integrationTest/resources'])
+                compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
+                runtimeClasspath += output + compileClasspath
+            }
+        }
+
+        configurations {
+            integrationTestImplementation.extendsFrom testImplementation
+            integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+            integrationTestCompileOnly.extendsFrom testCompileOnly
+            integrationTestAnnotationProcessor.extendsFrom testAnnotationProcessor
+            integrationTestArtifacts
+        }
+
+        tasks.register('integrationTest', Test) {
+            description = 'Runs integration tests.'
+            group = 'verification'
+            testClassesDirs = sourceSets.integrationTest.output.classesDirs
+            classpath = sourceSets.integrationTest.runtimeClasspath
+            shouldRunAfter tasks.named('test')
+            useJUnitPlatform()
+        }
+
+        tasks.register('integrationTestJar', Jar) {
+            archiveClassifier.set('integration-tests')
+            from sourceSets.integrationTest.output
+        }
+
+        artifacts {
+            integrationTestArtifacts tasks.named('integrationTestJar')
+        }
+    }
+}
+
 dependencies {
 	implementation project(':modules:_common')
 	implementation project(':modules:identity')
 	implementation project(':modules:ai')
+	implementation project(':modules:document')
+	implementation project(':modules:ocr')
 	implementation project(':modules:payment')
 	implementation project(':modules:transaction')
 	implementation project(':modules:wallet')
@@ -104,7 +149,6 @@ dependencies {
 	compileOnly('org.projectlombok:lombok')
 
 	// test related
-    testImplementation project(path: ':modules:_common', configuration: 'testArtifacts')
 	testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.security:spring-security-test')

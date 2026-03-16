@@ -33,6 +33,12 @@
       "@ai/*": [
         "modules/ai/*"
       ],
+      "@ocr/*": [
+        "modules/ocr/*"
+      ],
+      "@document/*": [
+        "modules/document/*"
+      ],
       "@payment/*": [
         "modules/payment/*"
       ],

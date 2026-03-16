@@ -2,12 +2,11 @@ package bitecode.modules.ai.service;
 
 import bitecode.modules.ai.agent.data.AiAgentRequestData;
 import bitecode.modules.ai.agent.provider.ChatProviderBuilder;
-import bitecode.modules.ai.agent.provider.openai.OpenAiFileApiClient;
+import bitecode.modules._common.client.openai.OpenAiFilesClient;
 import bitecode.modules.ai.model.entity.AiAgent;
 import bitecode.modules.ai.model.entity.AiServicesProviderConfig;
 import bitecode.modules.ai.model.enums.AiServicesProviderType;
 import bitecode.modules.ai.utils.DocumentUtils;
-import com.openai.models.files.FilePurpose;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -71,7 +70,7 @@ public class FileDataExtractorService {
 
     private final AiServicesProviderConfigService providerConfigService;
     private final ChatProviderBuilder chatProviderBuilder;
-    private final OpenAiFileApiClient openAiFileApiService;
+    private final OpenAiFilesClient openAiFilesClient;
 
     public List<AiAgentRequestData.AttachmentContent> extractAttachmentContents(@Nullable List<MultipartFile> files, AiAgent agent, boolean uploadFiles) {
         if (files == null || files.isEmpty()) {
@@ -95,7 +94,7 @@ public class FileDataExtractorService {
 
         if (uploadFiles) {
             if (providerType.equals(AiServicesProviderType.OPEN_AI)) {
-                var fileResp = openAiFileApiService.uploadFile(providerConfig, file, FilePurpose.ASSISTANTS);
+                var fileResp = openAiFilesClient.uploadFile(providerConfig.getApiKey(), file, OpenAiFilesClient.Purpose.ASSISTANTS);
                 return AiAgentRequestData.UploadedAttachment.builder().fileId(fileResp.id()).build();
             } else {
                 throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Upload attachment: Unsupported provider type: " + providerType);

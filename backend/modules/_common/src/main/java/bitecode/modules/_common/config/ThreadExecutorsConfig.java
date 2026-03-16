@@ -14,7 +14,6 @@ import java.util.concurrent.Executors;
 @Configuration
 @EnableAsync
 public class ThreadExecutorsConfig implements WebMvcConfigurer {
-
     @Bean(name = "mvcTaskExecutor")
     public AsyncTaskExecutor mvcTaskExecutor() {
         var executor = new ThreadPoolTaskExecutor();

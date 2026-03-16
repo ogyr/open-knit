@@ -9,6 +9,8 @@ import {AdminLayout} from "@app/components/admin/AdminLayout.tsx";
 import {AuthProvider, useAuth} from "@identity/auth/contexts/AuthContext.tsx";
 import {VerifyAccountFormPage} from "@identity/auth/pages/VerifyAccountFormPage.tsx";
 import {ProtectedRoute} from "@common/components/router/ProtectedRoute.tsx";
+import {DocumentsPage} from "@document/pages/DocumentsPage.tsx";
+import {DocumentDetailsPage} from "@document/pages/DocumentDetailsPage.tsx";
 
 const getAdminLayoutProtectedRoute = () => {
     return <Route path="/admin/*" element={
@@ -37,6 +39,8 @@ function AppRoutesWithAuth() {
         switch (role) {
             case "ROLE_ADMIN":
                 return {route: getAdminLayoutProtectedRoute(), path: "/admin"};
+            case "ROLE_USER":
+                return {route: null, path: "/documents"};
             default:
                 return null;
         }
@@ -58,6 +62,16 @@ function AppRoutesWithAuth() {
             {/* PROTECTED ROUTES */}
 
             {layoutRoute?.route}
+            <Route path="/documents" element={
+                <ProtectedRoute>
+                    <DocumentsPage/>
+                </ProtectedRoute>
+            }/>
+            <Route path="/documents/:id" element={
+                <ProtectedRoute>
+                    <DocumentDetailsPage/>
+                </ProtectedRoute>
+            }/>
 
             {/* Root redirect depending on login */}
             {isLoggedIn && (

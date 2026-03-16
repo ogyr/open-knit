@@ -40,6 +40,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import jakarta.servlet.DispatcherType;
 import java.util.List;
 
 @Configuration
@@ -77,6 +78,7 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(CorsUtils::isPreFlightRequest).permitAll();
+                    auth.dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD).permitAll();
                     noAuthUrls.forEach((httpMethod, url) -> auth.requestMatchers(httpMethod, url.toArray(String[]::new)).permitAll());
                     auth.requestMatchers("/actuator/**").permitAll();
                     // enable in case of any static resources

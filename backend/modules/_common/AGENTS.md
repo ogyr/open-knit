@@ -117,6 +117,7 @@ Below is a full list of Java types in this module with brief purpose description
 - `AuthUtils`: helper for extracting authenticated user UUID from Spring Security context.
 - `DateUtils`: shared date constants (`DEFAULT_ZONE_ID`).
 - `FileUtils`: utility for writing plain text or pretty JSON content to files.
+- `OpenAiFilesClient`: shared OpenAI Files API uploader returning reusable file ids for modules that call the Responses API.
 - `QueryDslUtils`: pagination and dynamic sorting helpers for QueryDSL queries.
 - `RandomCodeGeneratorUtils`: helper generators for PINs, alphanumeric codes, and passwords.
 - `UrlUtils`: URL base extraction helper with malformed-input fallback.

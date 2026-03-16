@@ -15,14 +15,20 @@ import {paymentsAdminLayoutConfig} from "@payment/_scaffolder/PaymentsAdminLayou
 import {subscriptionsAdminLayoutConfig} from "@payment/_scaffolder/SubscriptionsAdminLayoutConfig.tsx";
 import {aiAdminLayoutConfig} from "@ai/_scaffolder/AiAdminLayoutConfig.tsx";
 import {identityAdminLayoutConfig} from "@identity/_scaffolder/IdentityAdminLayoutConfig.tsx";
+import {documentsAdminLayoutConfig} from "@document/_scaffolder/DocumentsAdminLayoutConfig.tsx";
+import {ocrAdminLayoutConfig} from "@ocr/_scaffolder/OcrAdminLayoutConfig.tsx";
 
 const adminModuleConfigs: AdminLayoutModuleConfig[] = [
     transactionsAdminLayoutConfig,
     paymentsAdminLayoutConfig,
     subscriptionsAdminLayoutConfig,
     aiAdminLayoutConfig,
+    ocrAdminLayoutConfig,
     identityAdminLayoutConfig,
+    documentsAdminLayoutConfig,
 ];
+
+const settingsSidebarPath = "/admin/settings";
 
 const moduleBreadcrumbs = Object.assign(
     {},
@@ -40,11 +46,35 @@ export function AdminLayout() {
     const isMobile = useIsMobile();
     const [isSidebarOpen, setSidebarOpen] = useState(true);
 
+    const normalizeSidebarPath = (path?: string) => {
+        if (!path) {
+            return path;
+        }
+        return path.startsWith("/") ? path : `/${path}`;
+    };
+
     const routes = useRoutes([
         {index: true, element: <Navigate to="dashboard" replace/>},
         {path: "dashboard", element: <DashboardPage/>},
         ...adminModuleConfigs.flatMap((moduleConfig) => moduleConfig.routes ?? []),
     ]);
+
+    const sidebarItems = adminModuleConfigs
+        .flatMap((moduleConfig) => moduleConfig.sidebarItems ?? [])
+        .sort((firstItem, secondItem) => {
+            const normalizedFirstPath = normalizeSidebarPath(firstItem.path);
+            const normalizedSecondPath = normalizeSidebarPath(secondItem.path);
+
+            if (normalizedFirstPath === settingsSidebarPath) {
+                return 1;
+            }
+
+            if (normalizedSecondPath === settingsSidebarPath) {
+                return -1;
+            }
+
+            return 0;
+        });
 
     const SidebarItemWrapper = (props: ComponentProps<typeof SidebarItem> & { path?: string }) => {
         const {icon: IconComponent, path, className, ...otherProps} = props;
@@ -70,13 +100,6 @@ export function AdminLayout() {
         )
     }
 
-    const normalizeSidebarPath = (path?: string) => {
-        if (!path) {
-            return path;
-        }
-        return path.startsWith("/") ? path : `/${path}`;
-    };
-
     return (
         <ApplicationShell setSidebarOpen={setSidebarOpen} isSidebarOpen={isSidebarOpen} routes={routes}>
             <DrawerItems>
@@ -88,8 +111,7 @@ export function AdminLayout() {
                         <SidebarItems className="pb-32">
                             <SidebarItemGroup>
                                 <SidebarItemWrapper icon={ChartIcon} path="/admin/dashboard">Dashboard</SidebarItemWrapper>
-                                {adminModuleConfigs
-                                    .flatMap((moduleConfig) => moduleConfig.sidebarItems ?? [])
+                                {sidebarItems
                                     .map((item, index) => {
                                         const {children, path, ...otherProps} = item;
                                         return (

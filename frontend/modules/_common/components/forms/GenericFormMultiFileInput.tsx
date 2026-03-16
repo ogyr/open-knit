@@ -1,6 +1,6 @@
 import {ControllerRenderProps, FieldErrors, FieldValues, Path} from 'react-hook-form'
 import {HelperText, Label} from 'flowbite-react'
-import React, {ComponentProps, useMemo, useRef} from 'react'
+import React, {ComponentProps, useMemo, useRef, useState} from 'react'
 import {GenericButton} from '@common/components/blocks/GenericButton.tsx'
 import {GenericTooltip} from "@common/components/elements/GenericTooltip.tsx";
 import FileCard from "@common/components/forms/multi-file-input/FileCard.tsx";
@@ -48,11 +48,12 @@ export function GenericFormMultiFileInput<
                             addButtonText,
                             emptyStateText,
                             showFileType,
-                            tooltip,
-                            wrapperClassName,
-                            ...rest
+                        tooltip,
+                        wrapperClassName,
+                        ...rest
                         }: GenericFormMultiFileInputProps<T, FE, FN>) {
     const inputRef = useRef<HTMLInputElement | null>(null)
+    const [isDraggingOver, setIsDraggingOver] = useState(false)
 
     const error =
         errors[existingFilesField.name] || errors[newFilesField.name]
@@ -79,8 +80,7 @@ export function GenericFormMultiFileInput<
 
     const openPicker = () => inputRef.current?.click()
 
-    const onFilesSelected: React.ChangeEventHandler<HTMLInputElement> = e => {
-        const selected = Array.from(e.target.files || [])
+    const mergeSelectedFiles = (selected: File[]) => {
         const merged: File[] = [...newFiles]
         for (const f of selected) {
             const key = buildFileKey(f)
@@ -89,7 +89,19 @@ export function GenericFormMultiFileInput<
             }
         }
         newFilesField.onChange(merged)
+    }
+
+    const onFilesSelected: React.ChangeEventHandler<HTMLInputElement> = e => {
+        const selected = Array.from(e.target.files || [])
+        mergeSelectedFiles(selected)
         if (inputRef.current) inputRef.current.value = ''
+    }
+
+    const onDrop: React.DragEventHandler<HTMLDivElement> = event => {
+        event.preventDefault()
+        setIsDraggingOver(false)
+        const selected = Array.from(event.dataTransfer.files || [])
+        mergeSelectedFiles(selected)
     }
 
     const removeExistingAt = (idx: number) => {
@@ -132,7 +144,17 @@ export function GenericFormMultiFileInput<
                     />
                 ))}
                 {existingFiles.length + newFiles.length === 0 && (
-                    <div className="rounded-lg border border-dashed border-gray-300 p-6 text-center text-sm text-gray-500">
+                    <div
+                        className={twMerge(
+                            "rounded-lg border border-dashed p-6 text-center text-sm text-gray-500 transition-colors cursor-pointer",
+                            isDraggingOver ? "border-primary-500 bg-primary-50" : "border-gray-300"
+                        )}
+                        onClick={openPicker}
+                        onDragEnter={() => setIsDraggingOver(true)}
+                        onDragLeave={() => setIsDraggingOver(false)}
+                        onDragOver={(event) => event.preventDefault()}
+                        onDrop={onDrop}
+                    >
                         {emptyStateText ?? 'No files added yet'}
                     </div>
                 )}
