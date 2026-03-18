@@ -12,11 +12,11 @@ export default function ConfigurationSection({options, selectedBundle, onSelectB
         <div className="flex flex-col gap-4 items-start w-full min-h-0">
             <div className="flex flex-col gap-1 items-start">
                 <div className="flex gap-1 items-start">
-                    <h3 className="text-xl font-semibold" style={{color: "#031735"}}>
+                    <h3 className="text-xl font-semibold text-[var(--text-strong)]">
                         2. Choose configuration
                     </h3>
                 </div>
-                <p className="font-normal" style={{color: "#374252"}}>
+                <p className="font-normal text-[var(--text-body)]">
                     Pick a starting point
                 </p>
             </div>

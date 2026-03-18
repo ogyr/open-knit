@@ -1,4 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
+import GenericLinkButton from "@app/components/GenericLinkButton";
 import {bundleModules, configurationOptions, lockedModuleIds, moduleIdToBackendName, systemOptionsByConfiguration} from "@app/pages/index/data";
 import {DiscordIcon, GithubIcon} from "@app/pages/index/components/Icons";
 import ConfigurationSection from "@app/pages/index/components/ConfigurationSection";
@@ -162,23 +163,16 @@ export default function Page() {
     };
 
     return (
-        <div className="bg-[#f2f2f2] min-h-screen md:h-[100dvh] flex flex-col items-center pt-12 md:overflow-hidden">
-            <div className="flex flex-col items-start w-full max-w-[1333px] px-4 md:px-0 gap-12 flex-1 min-h-0">
-                <header className="flex flex-col gap-2 items-start max-w-[500px]">
-                    <div className="flex items-center gap-2">
-                        <img
-                            src="/open-knit-logo.png"
-                            alt="OpenKnit logo"
-                            className="h-6 w-auto object-contain"
-                        />
-                        <p className="text-2xl font-semibold tracking-[0.02em]" style={{color: "#374252"}}>
-                            OpenKnit
-                        </p>
-                    </div>
+        <div className="flex-1 flex flex-col items-center w-full min-h-0 px-4 pt-6 md:px-0 md:pt-4 md:overflow-hidden">
+            <div className="flex flex-col items-start w-full max-w-[1333px] gap-8 md:gap-10 flex-1 min-h-0">
+                <header className="flex flex-col gap-2 items-start max-w-[500px]" id="configurator">
                     <h1>Compose your app in few clicks</h1>
-                    <p className="font-normal" style={{color: "#374252"}}>
+                    <p className="font-normal text-[var(--text-body)]">
                         Pick the parts you need and download a ready-made fullstack (Java-Spring + React + Vite) app.
                     </p>
+                    <GenericLinkButton href="/about" variant="secondary">
+                        If you want to understand more, click here
+                    </GenericLinkButton>
                 </header>
 
                 <section className="config-grid w-full flex-1 min-h-0">
@@ -247,7 +241,7 @@ export default function Page() {
                 </section>
             </div>
 
-            <footer className="bg-[#ebeeff] w-full mt-auto">
+            <footer className="bg-[var(--surface-subtle)] w-full mt-auto">
                 <div className="flex items-center justify-center h-[82px] px-20">
                     <div className="flex gap-2.5 items-center justify-center w-full flex-wrap">
                         <div className="flex flex-1 items-center justify-center">
@@ -255,8 +249,8 @@ export default function Page() {
                                 type="button"
                                 className={`w-[361px] h-[42px] rounded-[var(--radius)] flex items-center justify-center px-5 py-2.5 font-medium text-white transition-colors ${
                                     isGenerateDisabled || isDownloading
-                                        ? "cursor-not-allowed bg-[#a5a7f4]"
-                                        : "cursor-pointer bg-[var(--primary)] hover:bg-[#6d6ff0]"
+                                        ? "cursor-not-allowed bg-[var(--primary-disabled)]"
+                                        : "cursor-pointer bg-[var(--primary)] hover:bg-[var(--primary-hover)]"
                                 }`}
                                 disabled={isGenerateDisabled || isDownloading}
                                 onClick={handleGenerate}
@@ -265,12 +259,24 @@ export default function Page() {
                             </button>
                         </div>
                         <div className="flex gap-4 items-center justify-end">
-                            <button type="button" aria-label="GitHub" className="cursor-pointer">
-                                <GithubIcon/>
-                            </button>
-                            <button type="button" aria-label="Discord" className="cursor-pointer">
-                                <DiscordIcon/>
-                            </button>
+                            <a
+                                href="https://github.com/bitecode-tech/open-knit"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="GitHub"
+                                className="cursor-pointer text-[var(--text-strong)]"
+                            >
+                                <GithubIcon className="h-6 w-6"/>
+                            </a>
+                            <a
+                                href="https://discord.gg/XAAjcAFhUn"
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label="Discord"
+                                className="cursor-pointer text-[var(--text-strong)]"
+                            >
+                                <DiscordIcon className="h-6 w-6"/>
+                            </a>
                         </div>
                     </div>
                 </div>

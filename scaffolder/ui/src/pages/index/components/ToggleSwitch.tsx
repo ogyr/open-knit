@@ -6,25 +6,24 @@ export default function ToggleSwitch({checked, onChange, label, helper}: ToggleS
             <button
                 type="button"
                 onClick={() => onChange(!checked)}
-                className="h-6 w-12 shrink-0 relative rounded-[40px] transition-colors cursor-pointer"
-                style={{
-                    backgroundColor: checked ? "var(--primary)" : "#e4e6eb"
-                }}
+                className={`h-6 w-12 shrink-0 relative rounded-[40px] transition-colors cursor-pointer ${
+                    checked ? "bg-[var(--primary)]" : "bg-[var(--surface-switch-off)]"
+                }`}
                 aria-label={label}
                 aria-pressed={checked}
             >
-        <span
-            className="absolute bg-white rounded-[40px] w-5 h-5 top-0.5 transition-all"
-            style={{
-                left: checked ? "calc(100% - 23px)" : "3px"
-            }}
-        />
+                <span
+                    className="absolute bg-[var(--white)] rounded-[40px] w-5 h-5 top-0.5 transition-all"
+                    style={{
+                        left: checked ? "calc(100% - 23px)" : "3px"
+                    }}
+                />
             </button>
             <div className="flex flex-col gap-0.5">
-                <p className="font-medium" style={{color: "#031735"}}>
+                <p className="font-medium text-[var(--text-strong)]">
                     {label}
                 </p>
-                <p className="font-normal" style={{color: "#6b7380"}}>
+                <p className="font-normal text-[var(--text-muted)]">
                     {helper}
                 </p>
             </div>

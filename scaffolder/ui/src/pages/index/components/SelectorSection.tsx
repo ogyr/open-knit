@@ -28,14 +28,14 @@ export default function SelectorSection({
         <div className="flex flex-col gap-4 items-start w-full min-h-0">
             <div className="flex flex-col gap-1 items-start">
                 <div className="flex gap-1 items-start">
-                    <h3 className="text-xl font-semibold" style={{color: "#031735"}}>
+                    <h3 className="text-xl font-semibold text-[var(--text-strong)]">
                         3.
                     </h3>
-                    <h3 className="text-xl font-semibold" style={{color: "#031735"}}>
+                    <h3 className="text-xl font-semibold text-[var(--text-strong)]">
                         {title}
                     </h3>
                 </div>
-                <p className="font-normal" style={{color: "#374252"}}>
+                <p className="font-normal text-[var(--text-body)]">
                     {subtitle}
                 </p>
             </div>
@@ -62,7 +62,7 @@ export default function SelectorSection({
                             />
                         ))}
                         {selectedOptions.length > 0 && unselectedOptions.length > 0 ? (
-                            <hr className="w-full border-t border-gray-200"/>
+                            <hr className="w-full border-t border-[var(--border)]"/>
                         ) : null}
                         {unselectedOptions.map((option) => (
                             <RadioCard

@@ -9,3 +9,4 @@
 ## Notes
 
 - If typecheck fails, fix errors or ask for guidance before finalizing.
+- When making SEO-relevant changes to major public pages, update `public/sitemap.xml` and change the `lastmod` values for every affected URL.

@@ -17,20 +17,20 @@ export default function ProjectMetadataSection({
         <div className="flex flex-col gap-4 items-start w-[360px]">
             <div className="flex flex-col gap-1 items-start">
                 <div className="flex gap-1 items-start">
-                    <h3 className="text-xl font-semibold" style={{color: "#031735"}}>
+                    <h3 className="text-xl font-semibold text-[var(--text-strong)]">
                         1. Project metadata
                     </h3>
                 </div>
             </div>
-            <p className="font-normal" style={{color: "#374252"}}>
+            <p className="font-normal text-[var(--text-body)]">
                 Basic configuration
             </p>
 
             <div className="flex flex-col gap-2 items-start w-full">
-                <label className="font-medium" htmlFor="project-name" style={{color: "#031735"}}>
+                <label className="font-medium text-[var(--text-strong)]" htmlFor="project-name">
                     Project name
                 </label>
-                <div className="bg-[var(--card)] w-full h-[37px] rounded-[var(--radius)] border border-[#d0d5db]">
+                <div className="bg-[var(--card)] w-full h-[37px] rounded-[var(--radius)] border border-[var(--border-strong)]">
                     <input
                         id="project-name"
                         type="text"

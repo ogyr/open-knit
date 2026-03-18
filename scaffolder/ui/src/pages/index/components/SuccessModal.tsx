@@ -10,45 +10,45 @@ export default function SuccessModal({isOpen, onClose}: SuccessModalProps) {
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--overlay)] px-4"
             onClick={onClose}
         >
             <div
-                className="bg-white rounded-[16px] w-full max-w-[520px] p-6 shadow-xl"
+                className="bg-[var(--white)] rounded-[16px] w-full max-w-[520px] p-6 shadow-xl"
                 onClick={(event) => event.stopPropagation()}
             >
                 <div className="flex items-start justify-between gap-4">
-                    <h3 className="text-xl font-semibold" style={{color: "#031735"}}>
+                    <h3 className="text-xl font-semibold text-[var(--text-strong)]">
                         Your system foundation is ready!
                     </h3>
                     <button
                         type="button"
-                        className="text-sm text-[#6b7380] cursor-pointer"
+                        className="text-sm text-[var(--text-muted)] cursor-pointer"
                         onClick={onClose}
                     >
                         Close
                     </button>
                 </div>
-                <ol className="mt-4 list-decimal pl-5 space-y-3 font-normal" style={{color: "#374252"}}>
+                <ol className="mt-4 list-decimal pl-5 space-y-3 font-normal text-[var(--text-body)]">
                     <li>
                         In your project root, run{" "}
-                        <code className="rounded bg-[#0f172a] text-[#e2e8f0] px-2 py-1 text-sm">docker compose watch</code>
+                        <code className="rounded bg-[var(--surface-code-dark)] text-[var(--text-code-inverse)] px-2 py-1 text-sm">docker compose watch</code>
                     </li>
                     <li>
                         Open{" "}
-                        <code className="rounded bg-[#f1f5f9] text-[#0f172a] px-2 py-1 text-sm">http://localhost:3030</code>
+                        <code className="rounded bg-[var(--surface-code-light)] text-[var(--surface-code-dark)] px-2 py-1 text-sm">http://localhost:3030</code>
                     </li>
                     <li>
                         Log in with{" "}
-                        <code className="rounded bg-[#f1f5f9] text-[#0f172a] px-2 py-1 text-sm">admin@bitecode.tech</code>{" "}
+                        <code className="rounded bg-[var(--surface-code-light)] text-[var(--surface-code-dark)] px-2 py-1 text-sm">admin@bitecode.tech</code>{" "}
                         and password{" "}
-                        <code className="rounded bg-[#f1f5f9] text-[#0f172a] px-2 py-1 text-sm">test123</code>
+                        <code className="rounded bg-[var(--surface-code-light)] text-[var(--surface-code-dark)] px-2 py-1 text-sm">test123</code>
                     </li>
                 </ol>
                 <div className="mt-6 flex justify-end">
                     <button
                         type="button"
-                        className="px-4 py-2 rounded-[10px] bg-[var(--primary)] text-white font-medium cursor-pointer hover:bg-[#6d6ff0]"
+                        className="px-4 py-2 rounded-[10px] bg-[var(--primary)] text-[var(--white)] font-medium cursor-pointer hover:bg-[var(--primary-hover)]"
                         onClick={onClose}
                     >
                         Got it
