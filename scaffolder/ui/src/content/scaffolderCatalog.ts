@@ -75,8 +75,8 @@ export const moduleSummaries: ModuleSummary[] = [
         title: "Payment",
         shortDescription: "Payment/Subscription processing connector (currently only Stripe).",
         heroDescription: "Payment and subscription orchestration for plans, checkout flows, provider execution, and billing lifecycle management.",
-        imagePath: "/module-screens/payment.jpg",
-        imageAlt: "OpenKnit payment and subscriptions management screen",
+        imagePath: "/module-screens/transaction-details.jpg",
+        imageAlt: "OpenKnit payment transaction details screen",
         capabilities: [
             "Payment records, status updates, and audit history",
             "Subscription plans, checkout setup, and recurring billing lifecycle",

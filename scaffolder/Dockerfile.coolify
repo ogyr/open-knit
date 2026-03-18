@@ -11,6 +11,12 @@ RUN pnpm exec tsc -p tsconfig.json
 
 WORKDIR /app/scaffolder/ui
 COPY scaffolder/ui ./
+RUN mkdir -p /app/backend/modules/ai /app/backend/modules/identity /app/backend/modules/payment /app/backend/modules/transaction /app/backend/modules/wallet
+COPY backend/modules/ai/AGENTS.md /app/backend/modules/ai/AGENTS.md
+COPY backend/modules/identity/AGENTS.md /app/backend/modules/identity/AGENTS.md
+COPY backend/modules/payment/AGENTS.md /app/backend/modules/payment/AGENTS.md
+COPY backend/modules/transaction/AGENTS.md /app/backend/modules/transaction/AGENTS.md
+COPY backend/modules/wallet/AGENTS.md /app/backend/modules/wallet/AGENTS.md
 RUN pnpm install --no-frozen-lockfile
 RUN pnpm run build
 RUN pnpm run build:server
