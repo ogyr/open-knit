@@ -1,6 +1,6 @@
 import type {ChoiceOption} from "@app/pages/index/types";
 
-export type ModuleSlug = "identity" | "payment" | "wallet" | "transaction" | "ai";
+export type ModuleSlug = "identity" | "payment" | "wallet" | "transaction" | "ai" | "ocr" | "documents";
 
 export type ModuleSummary = {
     optionId: string;
@@ -166,6 +166,56 @@ export const moduleSummaries: ModuleSummary[] = [
         frontendReadmePath: "frontend/modules/ai/_scaffolder/README.md",
         backendModulePath: "backend/modules/ai",
         backendGuidePath: "backend/modules/ai/AGENTS.md",
+        isLocked: false
+    },
+    {
+        optionId: "ocr-module",
+        slug: "ocr",
+        backendName: "ocr",
+        title: "OCR module",
+        shortDescription: "Extract structured text from uploaded files with configurable OCR instructions.",
+        heroDescription: "OCR execution, provider configuration, saved extraction instructions, and persisted result history for document-processing workflows.",
+        imagePath: "/module-screens/ai.jpg",
+        imageAlt: "OpenKnit OCR processing interface",
+        capabilities: [
+            "User-owned OCR instructions with reusable extraction prompts",
+            "OCR execution against uploaded files with provider validation",
+            "Persisted OCR results plus admin-level provider configuration and oversight"
+        ],
+        configurationHighlights: [
+            "OpenAI OCR model selection under `bitecode.ocr.open-ai.model`",
+            "Provider configuration and API key management through the OCR admin endpoints",
+            "OCR result persistence in the dedicated `ocr` schema"
+        ],
+        frontendModulePath: "frontend/modules/ocr",
+        frontendReadmePath: null,
+        backendModulePath: "backend/modules/ocr",
+        backendGuidePath: "backend/modules/ocr/AGENTS.md",
+        isLocked: false
+    },
+    {
+        optionId: "documents-module",
+        slug: "documents",
+        backendName: "document",
+        title: "Documents module",
+        shortDescription: "Upload, store, list, download, and delete user-owned documents.",
+        heroDescription: "Document storage and retrieval module with pluggable adapters, owner scoping, metadata persistence, and admin document management.",
+        imagePath: "/module-screens/payment.jpg",
+        imageAlt: "OpenKnit documents management interface",
+        capabilities: [
+            "Upload documents with metadata persistence and checksum tracking",
+            "Owner-scoped list, details, download, and delete flows",
+            "Pluggable local or S3-compatible storage adapters with admin oversight"
+        ],
+        configurationHighlights: [
+            "Default storage adapter under `bitecode.document.storage.default-storage-type`",
+            "Local filesystem storage base path or S3-compatible bucket settings",
+            "Document metadata persistence in the dedicated `document` schema"
+        ],
+        frontendModulePath: "frontend/modules/document",
+        frontendReadmePath: null,
+        backendModulePath: "backend/modules/document",
+        backendGuidePath: "backend/modules/document/AGENTS.md",
         isLocked: false
     }
 ];

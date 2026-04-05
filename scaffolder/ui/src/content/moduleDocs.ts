@@ -1,7 +1,9 @@
 import type {ModuleSlug} from "@app/content/scaffolderCatalog";
 
 import aiBackendGuide from "../../../../backend/modules/ai/AGENTS.md?raw";
+import documentBackendGuide from "../../../../backend/modules/document/AGENTS.md?raw";
 import identityBackendGuide from "../../../../backend/modules/identity/AGENTS.md?raw";
+import ocrBackendGuide from "../../../../backend/modules/ocr/AGENTS.md?raw";
 import paymentBackendGuide from "../../../../backend/modules/payment/AGENTS.md?raw";
 import transactionBackendGuide from "../../../../backend/modules/transaction/AGENTS.md?raw";
 import walletBackendGuide from "../../../../backend/modules/wallet/AGENTS.md?raw";
@@ -31,6 +33,14 @@ export const moduleDocsBySlug: Record<ModuleSlug, ModuleDocs> = {
     ai: {
         coreFlows: extractMarkdownSection(aiBackendGuide, "Core flows"),
         coreFlowsPath: "backend/modules/ai/AGENTS.md"
+    },
+    ocr: {
+        coreFlows: extractMarkdownSection(ocrBackendGuide, "Core flows"),
+        coreFlowsPath: "backend/modules/ocr/AGENTS.md"
+    },
+    documents: {
+        coreFlows: extractMarkdownSection(documentBackendGuide, "Core flows"),
+        coreFlowsPath: "backend/modules/document/AGENTS.md"
     }
 };
 
