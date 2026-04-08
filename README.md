@@ -89,7 +89,7 @@ Each module delivers practical domain behavior and infrastructure wiring so your
 1. Start the full dev environment with Docker Compose Watch (live sync + quick restarts):
 
 ```bash
-docker compose watch
+docker compose logs -f --tail=200 --timestamps
 ```
 
 Backend changes trigger quick restarts inside the container, and the frontend uses Vite HMR.

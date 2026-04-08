@@ -1,5 +1,10 @@
 class DockerComposeFileUpdater {
-    updateContents(composeContents: string, containerName: string, databaseName: string): string {
+    updateContents(
+        composeContents: string,
+        backendContainerName: string,
+        postgresContainerName: string,
+        databaseName: string
+    ): string {
         const lines = composeContents.split(/\r?\n/);
 
         const appBlock = this.findServiceBlock(lines, "app");
@@ -12,7 +17,12 @@ class DockerComposeFileUpdater {
             throw new Error("services.postgres block not found in docker-compose.yml");
         }
 
-        const appContainerUpdated = this.updateContainerName(lines, appBlock, containerName);
+        const appContainerUpdated = this.updateContainerName(lines, appBlock, backendContainerName);
+        const postgresContainerUpdated = this.updateContainerName(
+            lines,
+            postgresBlock,
+            postgresContainerName
+        );
         const appDatasourceUpdated = this.updateServiceEnvironmentValue(
             lines,
             appBlock,
@@ -28,6 +38,9 @@ class DockerComposeFileUpdater {
 
         if (!appContainerUpdated) {
             throw new Error("container_name not found under services.app in docker-compose.yml");
+        }
+        if (!postgresContainerUpdated) {
+            throw new Error("container_name not found under services.postgres in docker-compose.yml");
         }
         if (!appDatasourceUpdated) {
             throw new Error("SPRING_DATASOURCE_URL not found under services.app.environment in docker-compose.yml");

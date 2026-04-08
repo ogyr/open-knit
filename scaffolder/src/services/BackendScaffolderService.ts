@@ -58,7 +58,14 @@ class BackendScaffolderService {
             const mainJavaRoot = path.join(resolvedPaths.backendRoot, "src", "main", "java");
             return mainAppPackageNameUpdater.resolveSourcePackageName(mainJavaRoot);
         });
-        const containerName = this.buildContainerName(applicationName, runContext.isApplicationNameProvided);
+        const backendContainerName = this.buildBackendContainerName(
+            applicationName,
+            runContext.isApplicationNameProvided
+        );
+        const postgresContainerName = this.buildPostgresContainerName(
+            applicationName,
+            runContext.isApplicationNameProvided
+        );
         const updatedSettingsGradle = await runStep("Preparing settings.gradle", () => {
             const settingsContents = readRequiredFile(
                 path.join(resolvedPaths.backendRoot, "settings.gradle"),
@@ -77,7 +84,8 @@ class BackendScaffolderService {
             );
             return dockerComposeFileUpdater.updateContents(
                 composeContents,
-                containerName,
+                backendContainerName,
+                postgresContainerName,
                 databaseName
             );
         });
@@ -327,12 +335,20 @@ class BackendScaffolderService {
     }
 
 
-    private buildContainerName(applicationName: string, isApplicationNameProvided: boolean): string {
+    private buildBackendContainerName(applicationName: string, isApplicationNameProvided: boolean): string {
         const trimmedName = applicationName.trim();
         if (!isApplicationNameProvided || !trimmedName) {
-            return "modules-app";
+            return "modules-backend";
         }
-        return trimmedName;
+        return `${this.toKebabCase(trimmedName)}-backend`;
+    }
+
+    private buildPostgresContainerName(applicationName: string, isApplicationNameProvided: boolean): string {
+        const trimmedName = applicationName.trim();
+        if (!isApplicationNameProvided || !trimmedName) {
+            return "modules-pg17";
+        }
+        return `${this.toKebabCase(trimmedName)}-pg17`;
     }
 
     private buildDatabaseName(applicationName: string): string {
